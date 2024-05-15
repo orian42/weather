@@ -37,26 +37,32 @@ function searchHistory() {
 //This function will fetch data from the api
 function fetchCityWeather() {
     //get latitude and longitude
-    var appid = '1df8c06cbcb9f58d162e4920b1bd8368';
-    var q = 'eugene';
+    const apiKey = '1df8c06cbcb9f58d162e4920b1bd8368';
+    const city = 'dallas';
+    var lat;
+    var lon;
 
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q={city name}&limit=6&appid={API key}')
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
             console.log(data);
-        });
-    
-    var lat = 44.052071;
-    var lon = -123.086754;
+        
+        lat = data[0].lat;
+        lon = data[0].lon;
 
-    fetch('https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}')
-        .then(function (response) {
-            return response.json();
+        console.log(lat);
+        console.log(lon);
         })
-        .then(function (data) {
-            console.log(data);
+        .then(function() {
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&limit=6&appid=${apiKey}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data);
+                })
         });
 }
 
