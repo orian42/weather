@@ -1,0 +1,54 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+header {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+    background: linear-gradient(to right, blue, darkblue);
+}
+
+container {
+    display: flex;
+}
+
+search {
+    background-color: lightblue;
+    width: 15%;
+    min-width: 250px;
+    padding: 10px;
+    margin: 10px;
+}
+
+#historyBtns {
+    margin-top: 15px;
+    border-top: groove 3px;
+}
+
+dataContainer {
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 10px;
+}
+
+current {
+    border: solid black 1px;
+    background-color: lightcoral;
+    height: 200px;
+    padding: 15px;
+    margin: 10px;
+}
+
+forecast {
+    background-color: lightseagreen;
+    height: 200px;
+    padding: 15px;
+    margin: 10px;
+}
+
