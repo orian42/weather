@@ -17,14 +17,15 @@ function renderForecastCards() {
 
 
 //This function will process the search
-function citySearch() {
-
+function citySearch(city) {
+    saveSearch(city);
+    fetchCityWeather(city);
 }
 
 
 //This function will save the search history
-function saveSearch() {
-
+function saveSearch(city) {
+    console.log('saved ' + city)
 }
 
 
@@ -35,10 +36,10 @@ function searchHistory() {
 
 
 //This function will fetch data from the api
-function fetchCityWeather() {
+function fetchCityWeather(cityName) {
     //get latitude and longitude
     const apiKey = '1df8c06cbcb9f58d162e4920b1bd8368';
-    const city = 'dallas';
+    const city = cityName;
     var lat;
     var lon;
 
@@ -69,5 +70,11 @@ function fetchCityWeather() {
 
 //This function will run the initial display of the page
 window.onload = function() {
-    fetchCityWeather();
+    document.getElementById('searchCityBtn').addEventListener('click', function(event) {
+        event.preventDefault();
+        const cityName = document.getElementById('cityName').value;
+        citySearch(cityName);
+    });
+    
+    
 }
