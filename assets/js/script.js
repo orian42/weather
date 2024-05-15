@@ -16,26 +16,43 @@ function renderForecastCards() {
 }
 
 
-//This function will process the search
+//This function will process the search when the search button is clicked
 function citySearch(city) {
     saveSearch(city);
     fetchCityWeather(city);
 }
 
 
-//This function will save the search history
+//This function will save the search history and render the history buttons
 function saveSearch(city) {
-    console.log('saved ' + city)
+    var cityHistory = JSON.parse(localStorage.getItem('cityHx'));
+    if (cityHistory === null) {cityHistory = [];}
+    if (cityHistory.length > 7) {cityHistory.pop();}
+    cityHistory.unshift(city);
+    localStorage.setItem('cityHx', JSON.stringify(cityHistory));
 }
 
 
-//This function will process the search when a history button is clicked
-function searchHistory() {
 
+//This function will render history buttons
+function renderHxBtns () {
+    var cityHistory = JSON.parse(localStorage.getItem('cityHx'));
+    if (cityHistory === null) {cityHistory = [];}
+    const searchHistory = document.getElementById('historyBtns');
+    searchHistory.textContent = '';
+    for (i=0; i<cityHistory.length; i++) {
+        const newHxButton = document.createElement('button');
+        newHxButton.type = 'button';
+        newHxButton.innerText = cityHistory[i];
+        newHxButton.className = 'historyBtn';
+        newHxButton.value = cityHistory[i];
+        searchHistory.append(newHxButton);
+    }
 }
 
 
-//This function will fetch data from the api
+
+//This function will fetch data from the API
 function fetchCityWeather(cityName) {
     //get latitude and longitude
     const apiKey = '1df8c06cbcb9f58d162e4920b1bd8368';
@@ -48,13 +65,8 @@ function fetchCityWeather(cityName) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
-        
-        lat = data[0].lat;
-        lon = data[0].lon;
-
-        console.log(lat);
-        console.log(lon);
+            lat = data[0].lat;
+            lon = data[0].lon;
         })
         .then(function() {
             fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&limit=6&appid=${apiKey}`)
@@ -70,11 +82,19 @@ function fetchCityWeather(cityName) {
 
 //This function will run the initial display of the page
 window.onload = function() {
+    renderHxBtns();
+
     document.getElementById('searchCityBtn').addEventListener('click', function(event) {
         event.preventDefault();
         const cityName = document.getElementById('cityName').value;
         citySearch(cityName);
+        renderHxBtns();
     });
     
-    
+    document.getElementById('historyBtns').addEventListener('click', function(event) {
+        if (event.target.className === 'historyBtn') {
+            const cityName = event.target.value;
+            fetchCityWeather(cityName);
+        }
+    })
 }
