@@ -9,7 +9,7 @@ header {
     justify-content: center;
     align-items: center;
     height: 75px;
-    background: linear-gradient(to right, blue, darkblue);
+    background: linear-gradient(to right, rgb(52, 52, 146), navy);
 }
 
 container {
@@ -46,7 +46,6 @@ dataContainer {
 
 current {
     border: solid black 1px;
-    background-color: lightcoral;
     height: 200px;
     padding: 15px;
     margin: 10px;
@@ -98,4 +97,10 @@ forecast {
     padding: 10px;
     border-radius: 10px;
     border: none;
+}
+
+#currentWeather img {
+    height: 50px;
+    width: 50px;
+    margin-bottom: -15px;
 }

@@ -1,5 +1,35 @@
+//Define global variables
+var weatherData;
+
 //This function will populate the current weather conditions
-function displayCurrent() {
+function displayCurrent(data) {
+    const currentEl = document.getElementById('currentWeather');
+    currentEl.textContent = "";
+
+    let city = data.city.name;
+    let date = data.list[0].dt_txt;
+    let icon = ' https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png';
+    let temp = ((data.list[0].main.temp-273.15) * (9/5) + 32).toFixed(2);
+    let wind = (data.list[0].wind.speed * 2.237).toFixed(2);
+    let humidity = data.list[0].main.humidity;
+
+    const currentIcon = document.createElement('img');
+    const currentHdr = document.createElement('h1');
+    const currentTemp = document.createElement('p');
+    const currentWind = document.createElement('p');
+    const currentHum = document.createElement('p');
+
+    currentIcon.src = icon;
+    currentHdr.textContent = `${city} (${date})  `;
+    currentTemp.textContent = `Temp: ${temp}F`;
+    currentWind.textContent = `Wind: ${wind} MPH`;
+    currentHum.textContent = `Humidity: ${humidity}%`
+
+    currentWind.append(currentHum);
+    currentTemp.append(currentWind);
+    currentHdr.append(currentIcon);
+    currentEl.append(currentHdr);
+    currentEl.append(currentTemp);
 
 }
 
@@ -10,16 +40,12 @@ function displayForecast() {
 }
 
 
-//This function will render the forecast cards
-function renderForecastCards() {
 
-}
-
-
-//This function will process the search when the search button is clicked
-function citySearch(city) {
-    saveSearch(city);
-    fetchCityWeather(city);
+//This function will render the page when the search button is clicked
+function renderPage() {
+    renderHxBtns();
+    console.log(weatherData);
+    displayCurrent(weatherData);
 }
 
 
@@ -74,9 +100,9 @@ function fetchCityWeather(cityName) {
                     return response.json();
                 })
                 .then(function (data) {
-                    console.log(data);
+                    weatherData=data;
                 })
-        });
+        })
 }
 
 
@@ -87,14 +113,23 @@ window.onload = function() {
     document.getElementById('searchCityBtn').addEventListener('click', function(event) {
         event.preventDefault();
         const cityName = document.getElementById('cityName').value;
-        citySearch(cityName);
-        renderHxBtns();
+        if (cityName !== "") {
+            saveSearch(cityName);
+            fetchCityWeather(cityName);
+            setTimeout(() => {
+                renderPage();
+            }, 500);
+        }
+        
     });
     
     document.getElementById('historyBtns').addEventListener('click', function(event) {
         if (event.target.className === 'historyBtn') {
             const cityName = event.target.value;
             fetchCityWeather(cityName);
+            setTimeout(() => {
+                renderPage();
+            }, 500);
         }
     })
 }
