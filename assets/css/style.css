@@ -17,15 +17,22 @@ container {
 }
 
 search {
-    background-color: lightblue;
     width: 15%;
     min-width: 250px;
     padding: 10px;
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#searchCityForm {
+    display: flex;
+    flex-direction: column;
 }
 
 #historyBtns {
     margin-top: 15px;
+    margin-bottom: 15px;
     border-top: groove 3px;
 }
 
@@ -52,3 +59,43 @@ forecast {
     margin: 10px;
 }
 
+.historyBtn {
+    margin-top: 15px;
+    background-color: lightgray;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.historyBtn:hover {
+    background-color: lightblue;
+}
+
+#historyBtns {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-top: groove 3px;
+    display: flex;
+    flex-direction: column;
+}
+
+#searchCityForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#searchCityForm input {
+    font-size: 16px;
+    padding: 10px;
+}
+
+#searchCityForm button {
+    margin-top: 15px;
+    background-color: rgb(52, 52, 146);
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
