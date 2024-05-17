@@ -47,15 +47,16 @@ dataContainer {
 current {
     border: solid black 1px;
     height: 200px;
-    padding: 15px;
+    padding-left: 15px;
     margin: 10px;
 }
 
 forecast {
     background-color: lightseagreen;
-    height: 200px;
     padding: 15px;
     margin: 10px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .historyBtn {
@@ -103,4 +104,8 @@ forecast {
     height: 50px;
     width: 50px;
     margin-bottom: -15px;
+}
+
+#currentWeather p {
+    font-size: 18px;
 }

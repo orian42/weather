@@ -7,10 +7,10 @@ function displayCurrent(data) {
     currentEl.textContent = "";
 
     let city = data.city.name;
-    let date = data.list[0].dt_txt;
+    let date = (dayjs(data.list[0].dt_txt).add(data.city.timezone, 'second')).format('M/DD/YYYY');  //date converted from UTC to searched city's local date
     let icon = ' https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png';
-    let temp = ((data.list[0].main.temp-273.15) * (9/5) + 32).toFixed(2);
-    let wind = (data.list[0].wind.speed * 2.237).toFixed(2);
+    let temp = ((data.list[0].main.temp-273.15) * (9/5) + 32).toFixed(2); //Temperature converted from Kelvin to Fahrenheit
+    let wind = (data.list[0].wind.speed * 2.237).toFixed(2);  //Wind speed converted from meters/second to MPH
     let humidity = data.list[0].main.humidity;
 
     const currentIcon = document.createElement('img');
@@ -21,7 +21,7 @@ function displayCurrent(data) {
 
     currentIcon.src = icon;
     currentHdr.textContent = `${city} (${date})  `;
-    currentTemp.textContent = `Temp: ${temp}F`;
+    currentTemp.textContent = `Temp: ${temp}°F`;
     currentWind.textContent = `Wind: ${wind} MPH`;
     currentHum.textContent = `Humidity: ${humidity}%`
 
@@ -35,8 +35,37 @@ function displayCurrent(data) {
 
 
 //This Function will populate the 5-day forecast
-function displayForecast() {
+function displayForecast(data) {
+    const currentEl = document.getElementById('forecast');
+    currentEl.textContent = "";
 
+    for (i=0; i<5; i++) {
+        let date = (dayjs(data.list[i*8].dt_txt).add(data.city.timezone, 'second')).format('M/DD/YYYY');  //date converted from UTC to searched city's local date
+        let icon = ' https://openweathermap.org/img/wn/' + data.list[i*8].weather[0].icon + '@2x.png';
+        let temp = ((data.list[i*8].main.temp-273.15) * (9/5) + 32).toFixed(2); //Temperature converted from Kelvin to Fahrenheit
+        let wind = (data.list[i*8].wind.speed * 2.237).toFixed(2);  //Wind speed converted from meters/second to MPH
+        let humidity = data.list[i*8].main.humidity;
+
+        const forecastCard = document.createElement('div')
+        const currentIcon = document.createElement('img');
+        const currentHdr = document.createElement('h2');
+        const currentTemp = document.createElement('p');
+        const currentWind = document.createElement('p');
+        const currentHum = document.createElement('p');
+
+        currentIcon.src = icon;
+        currentHdr.textContent = `${date}`;
+        currentTemp.textContent = `Temp: ${temp}°F`;
+        currentWind.textContent = `Wind: ${wind} MPH`;
+        currentHum.textContent = `Humidity: ${humidity}%`
+
+        currentWind.append(currentHum);
+        currentTemp.append(currentWind);
+        forecastCard.append(currentHdr);
+        forecastCard.append(currentIcon);
+        forecastCard.append(currentTemp);
+        currentEl.append(forecastCard);
+    }
 }
 
 
@@ -44,8 +73,8 @@ function displayForecast() {
 //This function will render the page when the search button is clicked
 function renderPage() {
     renderHxBtns();
-    console.log(weatherData);
     displayCurrent(weatherData);
+    displayForecast(weatherData);
 }
 
 
@@ -80,12 +109,12 @@ function renderHxBtns () {
 
 //This function will fetch data from the API
 function fetchCityWeather(cityName) {
-    //get latitude and longitude
+    //define variables
     const apiKey = '1df8c06cbcb9f58d162e4920b1bd8368';
     const city = cityName;
     var lat;
     var lon;
-
+    //get latitude and longitude
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
         .then(function (response) {
             return response.json();
@@ -94,6 +123,7 @@ function fetchCityWeather(cityName) {
             lat = data[0].lat;
             lon = data[0].lon;
         })
+        //get weather data based on coordinates
         .then(function() {
             fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&limit=6&appid=${apiKey}`)
                 .then(function (response) {
@@ -101,9 +131,11 @@ function fetchCityWeather(cityName) {
                 })
                 .then(function (data) {
                     weatherData=data;
+                    console.log(weatherData);
                 })
         })
 }
+
 
 
 //This function will run the initial display of the page
