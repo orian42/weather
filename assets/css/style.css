@@ -9,7 +9,7 @@ header {
     justify-content: center;
     align-items: center;
     height: 75px;
-    background: linear-gradient(to right, rgb(52, 52, 146), navy);
+    background: linear-gradient(to right, rgb(80, 80, 145), navy);
 }
 
 container {
@@ -57,12 +57,13 @@ forecast {
 }
 
 .historyBtn {
-    margin-top: 15px;
+    margin-top: 20px;
     background-color: lightgray;
     font-size: 16px;
     padding: 10px;
     border-radius: 10px;
     border: none;
+    box-shadow: 10px 10px 5px gray;
 }
 
 .historyBtn:hover {
@@ -89,7 +90,7 @@ forecast {
 
 #searchCityForm button {
     margin-top: 15px;
-    background-color: rgb(52, 52, 146);
+    background-color: rgb(80, 80, 145);
     color: white;
     font-size: 16px;
     padding: 10px;
@@ -110,13 +111,17 @@ forecast {
 #forecast {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 #forecast div {
-    background-color: navy;
+    background-color: rgb(80, 80, 145);
     color: white;
     padding: 15px;
     min-width: 200px;
+    margin: 15px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px lightgray;
 }
 
 #forecast img {
