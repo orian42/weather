@@ -134,7 +134,7 @@ function fetchCityWeather(cityName) {
     var lat;
     var lon;
     //get latitude and longitude
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
         .then(function (response) {
             return response.json();
         })
