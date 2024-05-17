@@ -49,6 +49,9 @@ current {
     height: 200px;
     padding-left: 15px;
     margin: 10px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px gray;
+    min-width: 500px;
 }
 
 forecast {
@@ -67,7 +70,8 @@ forecast {
 }
 
 .historyBtn:hover {
-    background-color: lightblue;
+    background-color: rgb(80, 80, 145);
+    color: white;
 }
 
 #historyBtns {
@@ -96,6 +100,22 @@ forecast {
     padding: 10px;
     border-radius: 10px;
     border: none;
+    box-shadow: 10px 10px 5px gray;
+}
+
+#clearBtn {
+    margin-top: 20px;
+    background-color: lightcoral;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 10px 10px 5px gray;
+}
+
+#clearBtn:hover {
+    background-color: red;
+    color: white;
 }
 
 #currentWeather img {
@@ -121,7 +141,7 @@ forecast {
     min-width: 200px;
     margin: 15px;
     border-radius: 20px;
-    box-shadow: 10px 10px 5px lightgray;
+    box-shadow: 10px 10px 5px gray;
 }
 
 #forecast img {
