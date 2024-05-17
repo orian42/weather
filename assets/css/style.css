@@ -52,11 +52,8 @@ current {
 }
 
 forecast {
-    background-color: lightseagreen;
     padding: 15px;
     margin: 10px;
-    display: flex;
-    justify-content: space-around;
 }
 
 .historyBtn {
@@ -108,4 +105,21 @@ forecast {
 
 #currentWeather p {
     font-size: 18px;
+}
+
+#forecast {
+    display: flex;
+    justify-content: space-between;
+}
+
+#forecast div {
+    background-color: navy;
+    color: white;
+    padding: 15px;
+    min-width: 200px;
+}
+
+#forecast img {
+    height: 45px;
+    width: 45px;
 }
